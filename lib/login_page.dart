@@ -23,10 +23,13 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim());
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
 
-      Navigator.pushReplacementNamed(context, '/home');
+      // Navigate to Message Boards after successful login
+      Navigator.pushReplacementNamed(context, '/boards');
+
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'user-not-found') {
@@ -48,8 +51,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: const Text("Login"), backgroundColor: Colors.deepPurple),
+      appBar: AppBar(
+        title: const Text("Login"),
+        backgroundColor: Colors.deepPurple,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: _isLoading
