@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() => _isLoading = true);
 
     try {
-      // 1️⃣ Create user in Firebase Auth
+      // Create user in Firebase Auth
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: _emailController.text.trim(),
@@ -34,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
       User? user = userCredential.user;
 
       if (user != null) {
-        // 2️⃣ Save user info in Firestore
+        // Save user info in Firestore
         await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
@@ -47,8 +47,8 @@ class _RegisterPageState extends State<RegisterPage> {
           'registration_datetime': DateTime.now(),
         });
 
-        // 3️⃣ Navigate to Home Page
-        Navigator.pushReplacementNamed(context, '/home');
+        // Navigate to Message Boards after registration
+        Navigator.pushReplacementNamed(context, '/boards');
       }
     } on FirebaseAuthException catch (e) {
       String message = '';
@@ -71,8 +71,10 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: const Text("Register"), backgroundColor: Colors.deepPurple),
+      appBar: AppBar(
+        title: const Text("Register"),
+        backgroundColor: Colors.deepPurple,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: _isLoading

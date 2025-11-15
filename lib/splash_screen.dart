@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     // Navigate to Login or Home after 2 seconds
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 15), () {
       Navigator.pushReplacementNamed(context, '/login'); // Start with login
     });
   }
