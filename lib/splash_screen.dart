@@ -13,38 +13,43 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    // Navigate to Home after 2 seconds
+    // Navigate to Login or Home after 2 seconds
     Timer(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/login'); // Start with login
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple.shade700,
+      backgroundColor: const Color(0xFF673AB7), // Same as native splash
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.forum, size: 100, color: Colors.white),
+            // Logo
+            Image.asset(
+              'assets/logo.png',
+              width: 120,
+              height: 120,
+            ),
             const SizedBox(height: 20),
             const Text(
-              "Chatboards for the New Age",
+              "Message Board App",
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 24,
                 color: Colors.white,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             const Text(
-              "Message Board App",
+              "Chatboards for the New Age",
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white70,
               ),
-            )
+            ),
           ],
         ),
       ),

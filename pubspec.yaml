@@ -1,25 +1,35 @@
 name: hw02
-description: "A new Flutter project."
+description: "A new Flutter project for Message Board App."
 publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.9.2
+  sdk: ">=3.9.2 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  firebase_core: ^3.1.0 
-  firebase_auth: ^5.1.2 
-  cloud_firestore: ^5.0.1 
+  firebase_core: ^3.1.0
+  firebase_auth: ^5.1.2
+  cloud_firestore: ^5.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  flutter_native_splash: ^2.4.1 
+  flutter_native_splash: ^2.4.1
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/logo.png
+
+flutter_native_splash:
+  color: "#673AB7"  # Purple background for splash
+  image: assets/logo.png
+  android: true
+  ios: true
+  web: true
+  fullscreen: true
