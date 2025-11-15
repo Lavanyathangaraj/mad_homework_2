@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'splash_wrapper.dart'; // Import your splash screen logic
-// import 'login_screen.dart'; // Will be created in the next step
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'splash_screen.dart';
+import 'home_page.dart';
 
-void main() {
-  // MANDATORY: Ensure Flutter is initialized before any Firebase calls
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 }
 
@@ -14,24 +20,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Chatboards',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        useMaterial3: true,
-      ),
-      // Define all routes for the app
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const SplashWrapper(), // Starts the app on the splash screen
-        // Placeholder for the next assignment step (Login Screen)
-        '/login': (context) => const Center(
-          child: Text(
-            'Login Screen Placeholder - Ready for Step 2!',
-            textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.black),
-          ),
-        ), 
-        // ... more routes like '/home' will go here
+        '/': (context) => const SplashScreen(),
+        '/home': (context) => const HomePage(),
       },
     );
   }
