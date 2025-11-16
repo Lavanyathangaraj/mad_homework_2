@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'message_boards_page.dart';
+import 'profile_page.dart';
+import 'settings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,104 +11,63 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController _messageController = TextEditingController();
+  Widget _currentPage = const MessageBoardsPage();
+  String _title = "Message Boards";
 
-  // POST message to Firestore
-  Future<void> _postMessage() async {
-    final text = _messageController.text.trim();
+  void _selectPage(String page) {
+    Navigator.pop(context); // Close drawer
 
-    if (text.isEmpty) return;
-
-    await FirebaseFirestore.instance.collection('messages').add({
-      'text': text,
-      'timestamp': DateTime.now(),
+    setState(() {
+      if (page == 'Message Boards') {
+        _currentPage = const MessageBoardsPage();
+        _title = "Message Boards";
+      } else if (page == 'Profile') {
+        _currentPage = const ProfilePage();
+        _title = "Profile";
+      } else if (page == 'Settings') {
+        _currentPage = const SettingsPage();
+        _title = "Settings";
+      }
     });
-
-    _messageController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Message Board"),
+        title: Text(_title),
         backgroundColor: Colors.deepPurple,
       ),
-
-      body: Column(
-        children: [
-          // Input box to type messages
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: InputDecoration(
-                      hintText: "Write a message...",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: _postMessage,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                  ),
-                  child: const Text("Post"),
-                ),
-              ],
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.deepPurple),
+              child: Text(
+                "Menu",
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
             ),
-          ),
-
-          // Message List
-          Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('messages')
-                  .orderBy('timestamp', descending: true)
-                  .snapshots(),
-
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                final docs = snapshot.data!.docs;
-
-                if (docs.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      "No messages yet. Be the first to post!",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  );
-                }
-
-                return ListView.builder(
-                  itemCount: docs.length,
-                  itemBuilder: (context, index) {
-                    final data = docs[index].data() as Map<String, dynamic>;
-                    final message = data['text'];
-
-                    return Card(
-                      margin:
-                          const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                      child: ListTile(
-                        title: Text(message),
-                      ),
-                    );
-                  },
-                );
-              },
+            ListTile(
+              leading: const Icon(Icons.chat),
+              title: const Text("Message Boards"),
+              onTap: () => _selectPage('Message Boards'),
             ),
-          ),
-        ],
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text("Profile"),
+              onTap: () => _selectPage('Profile'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text("Settings"),
+              onTap: () => _selectPage('Settings'),
+            ),
+          ],
+        ),
       ),
+      body: _currentPage,
     );
   }
 }
