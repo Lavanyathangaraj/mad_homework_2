@@ -1,3 +1,4 @@
+// File: register_page.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -91,9 +92,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           value!.length < 6 ? 'Password too short' : null,
                     ),
                     const SizedBox(height: 20),
+                    // FIX: Set foregroundColor to white
                     ElevatedButton(
                       onPressed: _register,
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepPurple,
+                          foregroundColor: Colors.white),
                       child: const Text("Register"),
                     ),
                     TextButton(

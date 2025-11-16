@@ -1,3 +1,4 @@
+// File: settings_page.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -70,7 +71,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _logout() async {
     await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacementNamed(context, '/login');
+    // Use pushReplacementNamed to prevent user from going back to home page
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, '/login');
+    }
   }
 
   @override
@@ -96,10 +100,12 @@ class _SettingsPageState extends State<SettingsPage> {
                         value!.isEmpty ? 'Enter a valid email' : null,
                   ),
                   const SizedBox(height: 8),
+                  // Button Fix: Explicitly set foregroundColor to white
                   ElevatedButton(
                     onPressed: _updateEmail,
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple),
+                        backgroundColor: Colors.deepPurple,
+                        foregroundColor: Colors.white),
                     child: const Text('Update Email'),
                   ),
                   const SizedBox(height: 20),
@@ -111,17 +117,21 @@ class _SettingsPageState extends State<SettingsPage> {
                         value!.length < 6 ? 'Password too short' : null,
                   ),
                   const SizedBox(height: 8),
+                  // Button Fix: Explicitly set foregroundColor to white
                   ElevatedButton(
                     onPressed: _updatePassword,
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple),
+                        backgroundColor: Colors.deepPurple,
+                        foregroundColor: Colors.white),
                     child: const Text('Update Password'),
                   ),
                   const SizedBox(height: 40),
+                  // Button Fix: Explicitly set foregroundColor to white
                   ElevatedButton(
                     onPressed: _logout,
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.redAccent),
+                        backgroundColor: Colors.redAccent,
+                        foregroundColor: Colors.white),
                     child: const Text('Log Out'),
                   ),
                 ],

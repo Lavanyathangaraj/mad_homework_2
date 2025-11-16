@@ -1,3 +1,4 @@
+// File: profile_page.dart
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -126,10 +127,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     keyboardType: TextInputType.datetime,
                   ),
                   const SizedBox(height: 20),
+                  // FIX: Set foregroundColor to white
                   ElevatedButton(
                     onPressed: _updateProfile,
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple),
+                        backgroundColor: Colors.deepPurple,
+                        foregroundColor: Colors.white),
                     child: const Text('Save Changes'),
                   ),
                 ],
