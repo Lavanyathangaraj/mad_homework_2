@@ -1,4 +1,7 @@
+// File: message_boards_page.dart
+
 import 'package:flutter/material.dart';
+import 'board_messages_page.dart'; // Import the new page
 
 class MessageBoardsPage extends StatelessWidget {
   const MessageBoardsPage({super.key});
@@ -30,7 +33,7 @@ class MessageBoardsPage extends StatelessWidget {
       'icon': Icons.music_note,
       'color': Colors.orange,
     },
-  ];
+  ]; // <-- The list definition was likely cut off here
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,7 @@ class MessageBoardsPage extends StatelessWidget {
 
           return Card(
             margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            child: ListTile(
+            child: ListTile( // <-- Fix: Ensure ListTile is correctly structured
               leading: CircleAvatar(
                 backgroundColor: board['color'],
                 child: Icon(
@@ -61,8 +64,14 @@ class MessageBoardsPage extends StatelessWidget {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // Navigate to the messages of this board
-                // Example:
-                // Navigator.pushNamed(context, '/board_messages', arguments: board['name']);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BoardMessagesPage(
+                      boardName: board['name'],
+                    ),
+                  ),
+                );
               },
             ),
           );
