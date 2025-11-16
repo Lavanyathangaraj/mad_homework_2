@@ -1,3 +1,4 @@
+// File: login_page.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -61,9 +62,12 @@ class _LoginPageState extends State<LoginPage> {
                       validator: (value) => value!.isEmpty ? 'Enter password' : null,
                     ),
                     const SizedBox(height: 20),
+                    // FIX: Set foregroundColor to white
                     ElevatedButton(
                       onPressed: _login,
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepPurple,
+                          foregroundColor: Colors.white),
                       child: const Text("Login"),
                     ),
                     TextButton(
